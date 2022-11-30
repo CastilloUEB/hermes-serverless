@@ -1,18 +1,30 @@
-# Up and Running with Serverless Functions (Jamstack Explorers)
+# hermes-serverless
 
-Learn how to use serverless functions in less than 30 minutes!
+Una función serverless para consultar información de horarios de la U. El Bosque.
 
-📼: [Free Video Course](https://explorers.netlify.com/learn/up-and-running-with-serverless-functions/)
+```bash
+curl -X POST \
+    'http://localhost:8888/.netlify/functions/getEspacioFisicoSchedule?' \
+    -H 'content-type: application/json' \
+    -d '{
+    "id": "0745996",
+    "role": "estudiante"
+  }'
+```
 
-## 📚 Resources
+```dart
+import 'package:http/http.dart' as http;
 
-| Lesson                                                                                                                                                                                                | Start Branch                                                                                              | End Branch                                                                                              |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| [Introduction with Serverless Functions](https://explorers.netlify.com/learn/up-and-running-with-serverless-functions/introduction-with-serverless-functions)                                         | -                                                                                                         | -                                                                                                       |
-| [Project Setup with Serverless Functions](https://explorers.netlify.com/learn/up-and-running-with-serverless-functions/project-setup-with-serverless-functions)                                       | [Start Code](https://github.com/netlify/explorers-up-and-running-with-serverless-functions/tree/02-begin) | [End Code](https://github.com/netlify/explorers-up-and-running-with-serverless-functions/tree/02-end)   |
-| [Create Your First Serverless Function](https://explorers.netlify.com/learn/up-and-running-with-serverless-functions/create-your-first-serverless-function)                                           | [Start Code](https://github.com/netlify/explorers-up-and-running-with-serverless-functions/tree/03-begin) | [End Code](https://github.com/netlify/explorers-up-and-running-with-serverless-functions/tree/03-end)   |
-| [Integrate with a Third Party API with Serverless Functions](https://explorers.netlify.com/learn/up-and-running-with-serverless-functions/integrate-with-a-third-party-api-with-serverless-functions) | [Start Code](https://github.com/netlify/explorers-up-and-running-with-serverless-functions/tree/04-begin) | [End Code](https://github.com/netlify/explorers-up-and-running-with-serverless-functions/tree/04-end) |
-| [Deploying Serverless Functions](https://explorers.netlify.com/learn/up-and-running-with-serverless-functions/deploying-serverless-functions)                                                         | -                                                                                                         | -                                                                                                       |
-| [Customizing the Request with Serverless Functions](https://explorers.netlify.com/learn/up-and-running-with-serverless-functions/customizing-the-request-with-serverless-functions)                   | [Start Code](https://github.com/netlify/explorers-up-and-running-with-serverless-functions/tree/06-begin) | [End Code](https://github.com/netlify/explorers-up-and-running-with-serverless-functions/tree/06-end)   |
-| [The Power of Atomic Serverless Functions](https://explorers.netlify.com/learn/up-and-running-with-serverless-functions/the-power-of-atomic-serverless-functions)                                     | -                                                                                                         | -                                                                                                       |
-| [Next Steps with Serverless Functions](https://explorers.netlify.com/learn/up-and-running-with-serverless-functions/next-steps-with-serverless-functions)                                             | -                                                                                                         | -                                                                                                       |
+void main() async {
+  var headers = {
+    'content-type': 'application/json',
+  };
+
+  var data = '{\n  "id": "0745996",\n  "role": "student"\n}';
+
+  var url = Uri.parse('http://localhost:8888/.netlify/functions/getEspacioFisicoSchedule?');
+  var res = await http.post(url, headers: headers, body: data);
+  if (res.statusCode != 200) throw Exception('http.post error: statusCode= ${res.statusCode}');
+  print(res.body);
+}
+```
